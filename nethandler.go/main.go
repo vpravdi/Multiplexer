@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -13,6 +14,9 @@ func (m trial) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		log.Fatalln(err)
 	}
+
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	fmt.Fprintln(w, "<h1>Executing</h1>")
 
 	tpl.ExecuteTemplate(w, "index.gohtml", req.Form)
 

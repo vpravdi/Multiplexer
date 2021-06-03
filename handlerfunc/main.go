@@ -31,7 +31,14 @@ func kaka(res http.ResponseWriter, req *http.Request) {
 	}
 	defer f.Close()
 
-	io.Copy(res, f)
+	fi, err := f.Stat()
+	if err != nil {
+		http.Error(res, "File not found", 404)
+		return
+	}
+
+	http.ServeContent(res, req, f.Name(), fi.ModTime(), f)
+
 }
 
 func myName(res http.ResponseWriter, req *http.Request) {

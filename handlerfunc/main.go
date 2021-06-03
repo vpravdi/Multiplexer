@@ -13,6 +13,7 @@ func main() {
 	http.Handle("/", http.HandlerFunc(a))
 	http.HandleFunc("/kaka.jpeg", kaka)
 	http.HandleFunc("/me/", myName)
+	http.HandleFunc("/c", fileServe)
 	http.ListenAndServe(":8080", nil)
 
 }
@@ -21,6 +22,10 @@ func a(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Content-Type", "text/html; charset=utf-8")
 	io.WriteString(res, "a ran")
 
+}
+
+func fileServe(res http.ResponseWriter, req *http.Request) {
+	http.ServeFile(res, req, "kaka.jpeg")
 }
 
 func kaka(res http.ResponseWriter, req *http.Request) {

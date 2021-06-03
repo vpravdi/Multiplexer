@@ -2,7 +2,9 @@ package main
 
 import (
 	"io"
+	"log"
 	"net/http"
+	"text/template"
 )
 
 func main() {
@@ -22,5 +24,12 @@ func b(res http.ResponseWriter, req *http.Request) {
 }
 
 func myName(res http.ResponseWriter, req *http.Request) {
-	io.WriteString(res, "Hello Praveen")
+	tpl, err := template.ParseFiles("index.gohtml")
+	if err != nil {
+		log.Fatal("Error parsing template", err)
+	}
+	err = tpl.ExecuteTemplate(res, "index.gohtml", "Praveen")
+	if err != nil {
+		log.Fatal("Error executing template", err)
+	}
 }

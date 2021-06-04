@@ -12,7 +12,14 @@ func main() {
 }
 
 func a(res http.ResponseWriter, req *http.Request) {
-	a, b := req.FormValue("a"), req.FormValue("b")
-	io.WriteString(res, "dog:"+a)
-	io.WriteString(res, "cat:"+b)
+	a := req.FormValue("a")
+	//io.WriteString(res, "dog:\t"+a+"\n")
+	//io.WriteString(res, "cat:\t"+b+"\n")
+	res.Header().Set("Content-Type", "text/html; charset=utf-8")
+	io.WriteString(res, `
+	<form method="post">
+		<input type="text" name="a">
+		<input type="submit">
+	</form>
+	<br>`+a)
 }

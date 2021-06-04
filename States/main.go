@@ -5,6 +5,8 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"os"
+	"path/filepath"
 )
 
 func main() {
@@ -38,6 +40,20 @@ func a(res http.ResponseWriter, req *http.Request) {
 			return
 		}
 		a = string(bs)
+
+		//storing on the server
+		f2, err := os.Create(filepath.Join(".", h.Filename))
+		if err != nil {
+			http.Error(res, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		defer f2.Close()
+
+		_, err = f2.Write(bs)
+		if err != nil {
+			http.Error(res, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
 
 	res.Header().Set("Content-Type", "text/html; charset=utf-8")

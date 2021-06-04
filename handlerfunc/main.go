@@ -9,8 +9,8 @@ import (
 )
 
 func main() {
-	//http.HandleFunc("/", a)
-	http.Handle("/", http.HandlerFunc(a))
+	http.Handle("/", http.FileServer(http.Dir(".")))
+	http.Handle("/b", http.HandlerFunc(a))
 	http.HandleFunc("/kaka.jpeg", kaka)
 	http.HandleFunc("/me/", myName)
 	http.HandleFunc("/c", fileServe)

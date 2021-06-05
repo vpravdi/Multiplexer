@@ -19,6 +19,7 @@ func foo(res http.ResponseWriter, req *http.Request) {
 		cookie = &http.Cookie{
 			Name:     "session",
 			Value:    id.string(),
+			Secure:   true,
 			HttpOnly: true,
 		}
 		http.SetCookie(res, cookie)

@@ -33,7 +33,8 @@ func read(res http.ResponseWriter, req *http.Request) {
 		http.Redirect(res, req, "/set", http.StatusSeeOther)
 		return
 	}
-	fmt.Fprintln(res, `<h1>Your cookie:<br>%v</h1><h1><a href="/expire">expire</a></h1>`, c)
+	fmt.Fprintln(res, `<h1>Your cookie:<br>
+		</h1><h1><a href="/expire">expire</a></h1>`, c)
 }
 
 func expire(res http.ResponseWriter, req *http.Request) {

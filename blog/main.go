@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 	"strings"
 
@@ -31,7 +32,11 @@ func index(w http.ResponseWriter, req *http.Request) {
 func getCookie(w http.ResponseWriter, req *http.Request) *http.Cookie {
 	c, err := req.Cookie("session")
 	if err != nil {
-		sID, _ := uuid.NewV4()
+		sID, err := uuid.NewV4()
+		if err != nil {
+			log.Println()
+		}
+
 		c = &http.Cookie{
 			Name:  "session",
 			Value: sID.String(),
